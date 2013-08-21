@@ -2522,11 +2522,13 @@ the specific language governing permissions and limitations under the Apache Lic
                         killEvent(e);
                         return;
                     case KEY.TAB:
-                        // if selectOnBlur == true, select the currently highlighted option
-                        if (this.opts.selectOnBlur) {
-                            this.selectHighlighted({noFocus:true});
+                        if (this.opts.selectOnTab) {
+                          this.selectHighlighted();
+                          killEvent(e);
+                        } else if (this.opts.selectOnBlur) {
+                          this.selectHighlighted({noFocus:true});
+                          this.close();
                         }
-                        this.close();
                         return;
                     case KEY.ESC:
                         this.cancel(e);
@@ -3179,6 +3181,7 @@ the specific language governing permissions and limitations under the Apache Lic
         escapeMarkup: defaultEscapeMarkup,
         blurOnChange: false,
         selectOnBlur: false,
+        selectOnTab: false,
         adaptContainerCssClass: function(c) { return c; },
         adaptDropdownCssClass: function(c) { return null; },
         nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; }
